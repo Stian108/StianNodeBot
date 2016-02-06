@@ -28,7 +28,9 @@ function temp(value, unit) {
   }
 }
 
-module.exports = function (input) {
+module.exports.trigger = 'temp';
+
+module.exports.run = function (input) {
    tempArray = tempReg.exec(input);
    if (tempArray !== null) {
      return temp(tempArray[1], tempArray[2]);

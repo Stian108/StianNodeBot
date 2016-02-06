@@ -25,7 +25,9 @@ function curr(value, from, to) {
   return Math.round(eur / currRates.rates[to] *100)/100;
 }
 
-module.exports = function (input) {
+module.exports.trigger = 'money';
+
+module.exports.run = function (input) {
   currArray = currReg.exec(input);
   if (currArray !== null) {
     return curr(currArray[1], currArray[2], currArray[3]);

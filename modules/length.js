@@ -72,11 +72,13 @@ function len(value, unit, valueY, unitY) {
   }
 }
 
-module.exports = function (input) {
-  lenArray = lenReg.exec(input);
-  if (lenArray !== null) {
-    return len(lenArray[1], lenArray[2], lenArray[4], lenArray[5]);
-  } else {
-    return 'Not a valid length! ';
-  }
+module.exports.trigger = 'len';
+
+module.exports.run = function (input) {
+    lenArray = lenReg.exec(input);
+    if (lenArray !== null) {
+      return len(lenArray[1], lenArray[2], lenArray[4], lenArray[5]);
+    } else {
+      return 'Not a valid length! ';
+    }
 };

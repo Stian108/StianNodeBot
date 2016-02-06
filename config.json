@@ -1,0 +1,10 @@
+{
+  "name"    : "StianBot",
+  "server"  : "irc.heylisten.net",
+  "channels": [
+    "#bots"
+  ],
+  "bot": {
+    "prefix": "!"
+  }
+}

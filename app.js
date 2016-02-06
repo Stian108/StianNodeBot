@@ -1,48 +1,27 @@
-var irc       = require('irc'),
-    client    = new irc.Client(
-                'irc.heylisten.net',
-                'StianBot',
-                {channels: ['#bots']}
-                ),
-    temp      = require('./modules/temp.js'),
-    len       = require('./modules/length.js'),
-    currency  = require('./modules/currency.js');
+var async   = require('async'),
+    fs      = require('fs'),
+    irc     = require('irc'),
+    config  = JSON.parse(fs.readFileSync('config.json')),
+    client  = new irc.Client(config.server, config.name, config),
+    ircModules = []
+;
 
-client.addListener('message', function (from, to, text, message) {
-  var response = '';
-  //Temperature
-  if (text.indexOf('!temp') === 0) {
-    response += temp(text);
-  }
-  //Length
-  if (text.indexOf('!len') === 0) {
-    response += len(text);
-  }
-  //Currency exchange
-  if (text.indexOf('!money') === 0) {
-    response += currency(text);
-  }
-
-
-  //Help command
-  if (text.indexOf('!help') === 0) {
-    response +=
-    'You can do !len to convert imperial units to the one true metric, or !temp to convert to the holy Celsius. I can cleanse this world of miles, feet, inches, yards and Fahrenheit. ';
-  }
-
-  //Useless - for fun commands
-  if (text.indexOf('!boyf') === 0) {
-    response += 'I can be your boyfriend, ' + from + '! Your robotic lover, at your service ;)';
-  }
-  if (text.indexOf('qctm?') !== -1) {
-    response += ' Is someone using that obscure qctm? Do not worry, it means "Quietly Chuckling To Myself"';
-  }
-
-  //Respond
-  if (to.indexOf('#') !== -1) {
-    client.say(to, response);
-  } else {
-    client.say(from, response);
-  }
-
+fs.readdir('./modules/', function (err, files) {
+  async.each(files, function (file, cb) {
+      var name = file.replace('.','');
+      name = require('./modules/' + file);
+      ircModules.push(name);
+      cb();
+    }, function () {
+      client.addListener('message', function (from, to, text) {
+          async.each(ircModules, function (ircModule, cb) {
+             if (text.indexOf(config.bot.prefix + ircModule.trigger) === 0) {
+               if (to.indexOf('#') !== -1) {client.say(to, ircModule.run(text));}
+               else {client.say(from, ircModule.run(text));}
+             }
+             cb();
+           });
+        });
+    }
+  );
 });
