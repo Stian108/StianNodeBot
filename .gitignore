@@ -1,4 +1,4 @@
-# Logs 
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -77,3 +77,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+#Other
+config.json
