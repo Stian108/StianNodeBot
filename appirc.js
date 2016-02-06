@@ -2,7 +2,7 @@ var async   = require('async'),
     fs      = require('fs'),
     irc     = require('irc'),
     //Config.json contains the option object as defined in node-irc as well as the config.server, config.name and config.prefix property
-    config  = JSON.parse(fs.readFileSync('config.json')),
+    config  = JSON.parse(fs.readFileSync('ircconfig.json')),
     client  = new irc.Client(config.server, config.name, config),
     ircModules = []
 ;
