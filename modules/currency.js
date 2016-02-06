@@ -11,7 +11,7 @@ request('http://api.fixer.io/latest', function (error, response, body) {
 setInterval(function () {
   request('http://api.fixer.io/latest', function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      console.log(JSON.parse(body));
+      currRates = JSON.parse(body);
     }
   });
 }, 12*60*60*1000);
