@@ -79,4 +79,4 @@ $RECYCLE.BIN/
 *.lnk
 
 #Other
-config.json
+/config.json
