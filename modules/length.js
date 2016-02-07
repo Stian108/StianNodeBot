@@ -1,6 +1,6 @@
 //Len
 var lenReg =
-/(\d+\.?\d*)[ ]?(ly|mile[s]?|mi|inch[es]?|in|"|''|foot|feet|ft|'|yard[s]?|yd)[ ]?((\d+\.?\d*)[ ]?("|in|inch[es]?|''))?/i;
+/(\d+\.?\d*)\s?(ly|mile[s]?|mi|inch[es]?|in|"|''|foot|feet|ft|'|yard[s]?|yd)\s?((\d+\.?\d*)\s?("|in|inch[es]?|''))?/i;
 
 function len(value, unit, valueY, unitY) {
   //Fix values

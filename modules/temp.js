@@ -1,5 +1,5 @@
 //Temp
-var tempReg = /(-?\d+\.?\d*)[ °]*(K|C|F)/i;
+var tempReg = /(-?\d+\.?\d*)[\s°]*(K|C|F)/i;
 
 function temp(value, unit) {
   //Fix values
