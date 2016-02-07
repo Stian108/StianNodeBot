@@ -7,6 +7,10 @@ var async   = require('async'),
     ircModules = []
 ;
 
+client.addListener('registered', function () {
+  client.say('NickServ', 'IDENTIFY ' + config.pass);
+});
+
 fs.readdir('./modules/', function (err, files) {
   //Checks ./modules for modules
   async.each(files, function (file, cb) {
