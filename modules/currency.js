@@ -33,9 +33,9 @@ function curr(value, from, to) {
   }
   //Convert to output
   if (to === 'EUR') {
-    return Math.round(eur *100)/100;
+    return value + ' ' + from + ' to ' + Math.round(eur *100)/100 + ' ' + to;
   } else {
-    return Math.round(eur * currRates.rates[to] *100)/100;
+    return value + ' ' + from + ' = ' + Math.round(eur * currRates.rates[to] *100)/100 + ' ' + to;
   }
 }
 
