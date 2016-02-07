@@ -2,15 +2,17 @@ var request = require('request');
 
 //Curency api http://fixer.io/
 
-request('http://api.fixer.io/latest', function (error, response, body) {
-   if (!error && response.statusCode == 200) {
+var currRates = undefined;
+
+request('http://api.fixer.io/latest', function (err, response, body) {
+   if (!err && response.statusCode == 200) {
     currRates = JSON.parse(body);
   }
 });
 
 setInterval(function () {
-  request('http://api.fixer.io/latest', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
+  request('http://api.fixer.io/latest', function (err, response, body) {
+    if (!err && response.statusCode == 200) {
       currRates = JSON.parse(body);
     }
   });
@@ -40,12 +42,17 @@ function curr(value, from, to) {
 }
 
 module.exports.trigger = 'money';
+module.exports.help    = 'Syntax: money [Value][Currency]to[Currency], updates every 12hrs. Data from fixer.io';
 
 module.exports.run = function (input) {
   currArray = currReg.exec(input);
-  if (currArray !== null) {
-    return curr(currArray[1], currArray[2], currArray[3]);
+  if (currRates === undefined) {
+    return 'Can not connect to API';
   } else {
-    return 'Not valid! ';
+    if (currArray !== null) {
+      return curr(currArray[1], currArray[2], currArray[3]);
+    } else {
+      return 'Not valid! ';
+    }
   }
 };

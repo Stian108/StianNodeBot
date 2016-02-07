@@ -19,11 +19,24 @@ fs.readdir('./modules/', function (err, files) {
     cb();
   }, function () {
     client.on('message', function (msg) {
+      response = '';
       async.each(discordModules, function (discordModule, cb) {
-        if (msg.content.indexOf(config.prefix + discordModule.trigger) === 0) {
-          client.reply(msg, discordModule.run(msg));
+        if (RegExp('^\\' + config.prefix + discordModule.trigger, 'i').test(msg.content)) {
+          response += discordModule.run(msg.content);
+        } else if (RegExp('^\\' + config.prefix + 'help$', 'i').test(msg.content)) {
+          response += discordModule.trigger + ', ';
+        } else if (RegExp('^\\' + config.prefix + 'help ' + discordModule.trigger, 'i').test(msg.content)) {
+          response += discordModule.help;
         }
         cb();
+      }, function () {
+        if (RegExp('^\\' + config.prefix + 'help$', 'i').test(msg.content)) {
+          response = 'All commands use the prefix "' + config.prefix + '" and available commands are: help (this info), '+
+                     response + '. You can get detailed help using "' + config.prefix + 'help [command](w/o prefix)"';
+        }
+        if (response !== '') {
+          client.reply(msg, response);
+        }
       });
     });
   });

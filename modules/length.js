@@ -73,6 +73,7 @@ function len(value, unit, valueY, unitY) {
 }
 
 module.exports.trigger = 'len';
+module.exports.help    = 'Syntax: len [Value][Unit] / len [ft]\'[in]", converts in, mi, ft, yd and ly to meters';
 
 module.exports.run = function (input) {
     lenArray = lenReg.exec(input);

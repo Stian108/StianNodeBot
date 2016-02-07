@@ -21,14 +21,25 @@ fs.readdir('./modules/', function (err, files) {
       cb();
     }, function () {
       client.addListener('message', function (from, to, text) {
-          async.each(ircModules, function (ircModule, cb) {
-             if (text.indexOf(config.prefix + ircModule.trigger) === 0) {
-               if (to.indexOf('#') !== -1) {client.say(to, ircModule.run(text));}
-               else {client.say(from, ircModule.run(text));}
-             }
-             cb();
-           });
+        response = '';
+        async.each(ircModules, function (ircModule, cb) {
+           if (RegExp('^\\' + config.prefix + ircModule.trigger, 'i').test(text)) {
+             response += ircModule.run(text);
+           } else if (RegExp('^\\' + config.prefix + 'help$', 'i').test(text)) {
+             response += ircModule.trigger + ', ';
+           } else if (RegExp('^\\' + config.prefix + 'help ' + ircModule.trigger, 'i').test(text)) {
+             response += ircModule.help;
+           }
+           cb();
+         }, function () {
+           if (RegExp('^\\' + config.prefix + 'help$', 'i').test(text)) {
+             response = 'All commands use the prefix "' + config.prefix + '" and available commands are: help (this info), '+
+                        response + '. You can get detailed help using "' + config.prefix + 'help [command](w/o prefix)"';
+           }
+           if (to.indexOf('#') !== -1) client.say(to, response);
+           else client.say(from, response);
         });
+      });
     }
   );
 });

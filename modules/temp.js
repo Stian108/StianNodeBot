@@ -29,6 +29,7 @@ function temp(value, unit) {
 }
 
 module.exports.trigger = 'temp';
+module.exports.help = 'Syntax: temp [Value][Unit], Supports °C -> °K, °K -> °C, °F -> °C';
 
 module.exports.run = function (input) {
    tempArray = tempReg.exec(input);
