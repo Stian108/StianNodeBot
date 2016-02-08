@@ -36,6 +36,6 @@ module.exports.run = function (input) {
    if (tempArray !== null) {
      return temp(tempArray[1], tempArray[2]);
    } else {
-     return 'Not a valid temperature! ';
+     return 'Not valid! ';
    }
  };

@@ -11,12 +11,12 @@ client.addListener('registered', function () {
   client.say('NickServ', 'IDENTIFY ' + config.pass);
 });
 
-fs.readdir('./modules/', function (err, files) {
-  //Checks ./modules for modules
+fs.readdir('./textmodules/', function (err, files) {
+  //Checks ./textmodules for modules
   async.each(files, function (file, cb) {
     //Requires each module under the name modulejs and pushes it to ircModules
       var name = file.replace('.','');
-      name = require('./modules/' + file);
+      name = require('./textmodules/' + file);
       ircModules.push(name);
       cb();
     }, function () {

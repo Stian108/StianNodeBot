@@ -42,7 +42,7 @@ function curr(value, from, to) {
 }
 
 module.exports.trigger = 'money';
-module.exports.help    = 'Syntax: money [Value][Currency]to[Currency], updates every 12hrs. Data from fixer.io';
+module.exports.help    = 'Syntax: money [Value][Currency]to[Currency], updates every 24hrs. Data from fixer.io';
 
 module.exports.run = function (input) {
   currArray = currReg.exec(input);

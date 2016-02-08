@@ -1,6 +1,6 @@
 //Len
 var lenReg =
-/(\d+\.?\d*)\s?(ly|mile[s]?|mi|inch[es]?|in|"|''|foot|feet|ft|'|yard[s]?|yd)\s?((\d+\.?\d*)\s?("|in|inch[es]?|''))?/i;
+/(\d+\.?\d*)\s?(ly|mile[s]?|mi|inch(?:es)?|in|"|''|foot|feet|ft|'|yard[s]?|yd)\s?((\d+\.?\d*)\s?("|in|inch(?:es)?|''))?/i;
 
 function len(value, unit, valueY, unitY) {
   //Fix values
@@ -73,13 +73,13 @@ function len(value, unit, valueY, unitY) {
 }
 
 module.exports.trigger = 'len';
-module.exports.help    = 'Syntax: len [Value][Unit] / len [ft]\'[in]", converts in, mi, ft, yd and ly to meters';
+module.exports.help    = 'Syntax: len [Value][Unit], converts in, mi, ft, yd and ly to meters';
 
 module.exports.run = function (input) {
     lenArray = lenReg.exec(input);
     if (lenArray !== null) {
       return len(lenArray[1], lenArray[2], lenArray[4], lenArray[5]);
     } else {
-      return 'Not a valid length! ';
+      return 'Not valid! ';
     }
 };
