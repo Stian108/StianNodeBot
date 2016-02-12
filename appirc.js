@@ -24,13 +24,17 @@ fs.readdir('./textmodules/', function (err, files) {
         response = '';
         async.each(ircModules, function (ircModule, cb) {
            if (RegExp('^\\' + config.prefix + ircModule.trigger, 'i').test(text)) {
-             response += ircModule.run(text);
+             ircModule.run(text, function (data) {
+                 response += data;
+                 cb();
+             });
            } else if (RegExp('^\\' + config.prefix + 'help$', 'i').test(text)) {
              response += ircModule.trigger + ', ';
+             cb();
            } else if (RegExp('^\\' + config.prefix + 'help ' + ircModule.trigger, 'i').test(text)) {
              response += ircModule.help;
+             cb();
            }
-           cb();
          }, function () {
            if (RegExp('^\\' + config.prefix + 'help$', 'i').test(text)) {
              response = 'All commands use the prefix "' + config.prefix + '" and available commands are: help (this info), '+
