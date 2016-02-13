@@ -2,7 +2,7 @@ var request = require('request');
 
 //Curency api http://fixer.io/
 
-var currRates = undefined;
+var currRates;
 
 request('http://api.fixer.io/latest', function (err, response, body) {
    if (!err && response.statusCode == 200) {

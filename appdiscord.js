@@ -53,13 +53,13 @@ fs.readdir ('./voicemodules/', function (err, files) {
   }, function () {
     client.on('message', function (msg) {
       response = '';
-      async.each(discordVoiceModules, function (discordTextModule, cb) {
-        if (RegExp('^\\' + config.prefix + 'voice ' + discordVoiceModule.trigger, 'i').test(msg.content)) {
+      async.each(discordVoiceModules, function (discordVoiceModule, cb) {
+        if (RegExp('^\\' + config.voiceprefix + discordVoiceModule.trigger, 'i').test(msg.content)) {
           //Have the modules use the bot
-          discordVoiceModule.run(msg);
-        } else if (RegExp('^\\' + config.prefix + 'voice help$', 'i').test(msg.content)) {
+          discordVoiceModule.run(msg, client);
+        } else if (RegExp('^\\' + config.voiceprefix + 'help$', 'i').test(msg.content)) {
           response += discordVoiceModule.trigger + ', ';
-        } else if (RegExp('^\\' + config.prefix + 'voice help ' + discordVoiceModule.trigger, 'i').test(msg.content)) {
+        } else if (RegExp('^\\' + config.voiceprefix + 'help ' + discordVoiceModule.trigger, 'i').test(msg.content)) {
           response += discordVoiceModule.help;
         }
         cb();
